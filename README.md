@@ -26,7 +26,7 @@
 ### 1. 리포지토리 클론
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/clipboard-mcp-server.git
+git clone https://github.com/charles69729798/clipboard-mcp-server.git
 cd clipboard-mcp-server
 ```
 
@@ -271,7 +271,7 @@ MIT License - 자유롭게 사용하세요!
 
 ## 📞 문의
 
-문제가 있거나 제안사항이 있으면 [Issues](https://github.com/YOUR_USERNAME/clipboard-mcp-server/issues)에 등록해주세요!
+문제가 있거나 제안사항이 있으면 [Issues](https://github.com/charles69729798/clipboard-mcp-server/issues)에 등록해주세요!
 
 ---
 
