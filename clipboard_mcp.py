@@ -3,6 +3,7 @@
 Simple Clipboard MCP Server
 Win+Shift+S로 캡처한 이미지를 Claude가 바로 분석
 + 특정 창 실시간 캡처 기능
++ Claude 내장 비전으로 한글 텍스트 인식
 """
 
 from mcp.server.fastmcp import FastMCP
@@ -30,17 +31,20 @@ def paste_clipboard_image() -> Image:
         if isinstance(img, list):
             raise ValueError(f"클립보드에 파일 경로가 있습니다: {img}. 이미지를 직접 복사하세요.")
 
-        # PNG 무손실 형식으로 저장 (한글 인식 향상)
+        # PNG 형식으로 저장
         buffer = io.BytesIO()
 
-        # 이미지 크기가 너무 크면 리사이즈 (Claude 제한: ~5MB)
-        max_size = 2048
+        # 이미지 크기가 너무 크면 리사이즈 (4K 해상도까지 허용)
+        max_size = 3840  # 4K 해상도
         if img.width > max_size or img.height > max_size:
             ratio = min(max_size / img.width, max_size / img.height)
             new_size = (int(img.width * ratio), int(img.height * ratio))
-            img = img.resize(new_size, Image.Resampling.LANCZOS)
+            # LANCZOS: 최고 품질
+            from PIL import Image as PILImage
+            img = img.resize(new_size, PILImage.Resampling.LANCZOS)
 
-        img.save(buffer, format="PNG", optimize=True)
+        # compress_level=1로 속도와 품질 균형
+        img.save(buffer, format="PNG", optimize=False, compress_level=1)
 
         return Image(data=buffer.getvalue(), format="png")
 
@@ -115,18 +119,20 @@ def capture_window(window_title: str) -> Image:
 
         img = ImageGrab.grab(bbox=(left, top, right, bottom))
 
-        # PNG 무손실 형식으로 저장
+        # PNG 형식으로 저장
         buffer = io.BytesIO()
 
-        # 이미지 크기가 너무 크면 리사이즈
-        max_size = 2048
+        # 이미지 크기가 너무 크면 리사이즈 (4K 해상도까지 허용)
+        max_size = 3840  # 4K 해상도
         if img.width > max_size or img.height > max_size:
             ratio = min(max_size / img.width, max_size / img.height)
             new_size = (int(img.width * ratio), int(img.height * ratio))
+            # LANCZOS: 최고 품질
             from PIL import Image as PILImage
             img = img.resize(new_size, PILImage.Resampling.LANCZOS)
 
-        img.save(buffer, format="PNG", optimize=True)
+        # compress_level=1로 속도와 품질 균형
+        img.save(buffer, format="PNG", optimize=False, compress_level=1)
 
         return Image(data=buffer.getvalue(), format="png")
 

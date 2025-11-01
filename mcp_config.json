@@ -1,0 +1,25 @@
+{
+  "name": "clipboard-monitor",
+  "version": "1.0.0",
+  "description": "Win+Shift+S로 캡처한 화면을 Claude Code가 자동으로 인식",
+  "tools": [
+    {
+      "name": "get_latest_capture",
+      "description": "최신 화면 캡처 이미지 가져오기 (Win+Shift+S로 캡처한 것)",
+      "endpoint": "http://localhost:8000/latest",
+      "method": "GET"
+    },
+    {
+      "name": "get_clipboard_now",
+      "description": "현재 클립보드의 이미지 즉시 가져오기",
+      "endpoint": "http://localhost:8000/clipboard-now",
+      "method": "GET"
+    },
+    {
+      "name": "check_clipboard_status",
+      "description": "클립보드에 캡처된 이미지가 있는지 확인",
+      "endpoint": "http://localhost:8000/check",
+      "method": "GET"
+    }
+  ]
+}

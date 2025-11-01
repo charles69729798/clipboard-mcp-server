@@ -1,5 +1,4 @@
-fastapi>=0.100.0
-uvicorn>=0.20.0
+fastmcp>=0.1.0
 pillow>=10.0.0
-python-multipart>=0.0.6
+pygetwindow>=0.0.9
 requests>=2.31.0
